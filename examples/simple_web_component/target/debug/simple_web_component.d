@@ -1,0 +1,1 @@
+/Users/urijrumancev/rust_dev/web_components/rs_web_component/examples/simple_web_component/target/debug/simple_web_component: /Users/urijrumancev/rust_dev/web_components/rs_web_component/examples/simple_web_component/src/main.rs /Users/urijrumancev/rust_dev/web_components/rs_web_component/src/lib.rs

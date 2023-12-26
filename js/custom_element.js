@@ -1,0 +1,28 @@
+export function create_element(
+    name,
+    component
+) {
+    class CustomElement extends HTMLElement {
+        constructor() {
+            super();
+            component.init(this);
+        }
+
+        static get observedAttributes() {
+            return component.observed_attributes();
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            component.attribute_changed_callback(name, oldValue, newValue);
+        }
+
+        connectedCallback() {
+            component.connected_callback();
+        }
+
+        disconnectedCallback() {
+            component.disconnected_callback();
+        }
+    };
+    customElements.define(name, CustomElement);
+}
