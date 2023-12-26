@@ -1,5 +1,5 @@
 [package]
-name = "rs_web_component"
+name = "rs-web-component"
 version = "0.1.0"
 edition = "2021"
 
