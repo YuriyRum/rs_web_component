@@ -10,7 +10,7 @@ homepage="https://github.com/YuriyRum/rs_web_component/"
 repository = "https://github.com/YuriyRum/rs_web_component/"
 license = "MIT"
 keywords = ["web", "wasm", "web component", "custom element"]
-exclude = ["/target"]
+exclude = ["/target", ".*"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
