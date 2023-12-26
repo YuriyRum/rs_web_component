@@ -1,2 +1,3 @@
 /target
 /Cargo.lock
+/examples/simple_web_component/target
