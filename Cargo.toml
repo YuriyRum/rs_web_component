@@ -3,7 +3,7 @@ name = "rs_web_component"
 version = "0.1.0"
 edition = "2021"
 
-authors = ["<rumyua@gmail.com>"]
+authors = ["Yuriy <rumyua@gmail.com>"]
 description = "Helps to create a custom element for a web project"
 readme = "README.md"
 homepage="https://github.com/YuriyRum/rs_web_component/"
