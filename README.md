@@ -1,4 +1,4 @@
-A sample project to see how a custom component can be created in Rust.
+A sample project that shows how a custom component can be created in Rust.
 
 Example:
 ```
