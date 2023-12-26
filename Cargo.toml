@@ -3,6 +3,15 @@ name = "rs_web_component"
 version = "0.1.0"
 edition = "2021"
 
+authors = ["<rumyua@gmail.com>"]
+description = "Helps to create a custom element for a web project"
+readme = "README.md"
+homepage="https://github.com/YuriyRum/rs_web_component/"
+repository = "https://github.com/YuriyRum/rs_web_component/"
+license = "MIT"
+keywords = ["web", "wasm", "web component", "custom element"]
+exclude = ["/examples/*/target"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
