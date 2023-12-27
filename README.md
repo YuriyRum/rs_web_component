@@ -1,7 +1,7 @@
 A sample project that shows how a custom component can be created in Rust.
 
 Examples:
-[Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component) 
+[Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component),  
 [Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handler) 
 
 Basic example:
