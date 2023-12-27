@@ -1,6 +1,10 @@
 A sample project that shows how a custom component can be created in Rust.
 
-Example:
+Examples:
+[Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component) 
+[Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handler) 
+
+Basic example:
 ```
 use rs_web_component::{define_element, Component};
 use wasm_bindgen::prelude::*;
