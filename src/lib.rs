@@ -95,7 +95,7 @@ enum HandlerVal {
 ///     });
 /// }
 ///
-/// Example with a button and an event handler:
+/// # An Example with a button and an event handler:
 ///
 /// use rs_web_component::{define_element, Component};
 /// use wasm_bindgen::prelude::*;
