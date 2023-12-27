@@ -94,38 +94,42 @@ enum HandlerVal {
 ///         })
 ///     });
 /// }
+/// ```
+
 ///
-/// # An Example with a button and an event handler:
+/// # An Example with a button and an event handler
 ///
+/// ```
+
 /// use rs_web_component::{define_element, Component};
 /// use wasm_bindgen::prelude::*;
 /// use web_sys::{
 ///     CustomEvent, CustomEventInit, Event, HtmlElement, ShadowRoot, ShadowRootInit, ShadowRootMode,
 /// };
-///
+
 /// const BUTTON_EVENT_NAME: &str = "buttonClicked";
-///
+
 /// pub enum ThisVal {
 ///     Value(HtmlElement),
 ///      None,
 /// }
-///
+
 /// pub enum RootVal {
 ///     Value(ShadowRoot),
 ///     None,
 /// }
-///
+
 /// pub enum CallbackVal {
 ///     Value(Closure<dyn FnMut(Event) + 'static>),
 ///     None,
 /// }
-///
+
 /// struct MyComponent {
 ///     root: RootVal,
 ///     this: ThisVal,
 ///     callback: CallbackVal,
 /// }
-///
+
 /// impl Component for MyComponent {
 ///     fn init(&mut self, this: HtmlElement) {
 ///         self.this = ThisVal::Value(this);
@@ -152,7 +156,7 @@ enum HandlerVal {
 ///         self.detach_event_handler();
 ///     }
 /// }
-///
+
 /// impl MyComponent {
 ///     fn render(&self) -> String {
 ///         "<div><button>Click me</button></div>".to_string()
@@ -216,7 +220,7 @@ enum HandlerVal {
 ///         })
 ///     });
 /// }
-/// `
+/// ```
 pub trait Component {
     /// Gives access to a web_sys::HtmlElement
     /// # Arguments
