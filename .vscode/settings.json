@@ -1,5 +1,7 @@
 {
     "rust-analyzer.linkedProjects": [
-        "./examples/simple_web_component/Cargo.toml"
+        "./examples/simple_web_component/Cargo.toml",
+        "./examples/button_with_event_handler/Cargo.toml",
+        "./examples/button_with_event_handler/Cargo.toml"
     ]
 }

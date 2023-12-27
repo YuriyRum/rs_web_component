@@ -1,3 +1,4 @@
 /target
 /Cargo.lock
 /examples/simple_web_component/target
+/examples/button_with_event_handler/target
