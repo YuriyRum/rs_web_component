@@ -1,7 +1,8 @@
 A sample project that shows how a custom component can be created in Rust.
 
-v0.1.3:<br/>
-- Function add_template was added.<br/>
+v0.1.3:
+- Function add_template was added
+- An example with a template was added
 
 [Documentation](https://docs.rs/rs_web_component/0.1.3/rs_web_component)
 

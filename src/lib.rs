@@ -335,7 +335,7 @@ pub fn define_element(name: String, constructor: fn() -> Box<dyn Component>) {
  *
  * * `template_id` - An id of a template
  * * `template_content` - A string representation of a content without the Template tag.
- *                      Can be validated/sanitized with some of the amazing libs <https://crates.io/search?q=sanitize%20html>
+ *                      Can be validated/sanitized with some great libs <https://crates.io/search?q=sanitize%20html>
  */
 pub fn add_template(template_id: String, template_content: String) {
     let window = if let Some(window) = web_sys::window() {
