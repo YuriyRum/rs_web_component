@@ -1,8 +1,15 @@
 A sample project that shows how a custom component can be created in Rust.
 
-Examples:
-[Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component),  
-[Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handler) 
+v0.1.3:
+- Function add_template was added
+- An example with a template was added
+
+[Documentation](https://docs.rs/rs_web_component/0.1.3/rs_web_component)
+
+Examples:<br/>
+[Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component)<br/>
+[Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handler)<br/> 
+[An example with a template](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_template)
 
 Basic example:
 ```

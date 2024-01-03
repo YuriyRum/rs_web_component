@@ -328,3 +328,43 @@ pub fn define_element(name: String, constructor: fn() -> Box<dyn Component>) {
     };
     create_element(name, renderer);
 }
+
+/**
+ * Creates a template element with the specified content
+ * # Arguments
+ *
+ * * `template_id` - An id of a template
+ * * `template_content` - A string representation of a content without the Template tag.
+ *                      Can be validated/sanitized with some great libs <https://crates.io/search?q=sanitize%20html>
+ */
+pub fn add_template(template_id: String, template_content: String) {
+    let window = if let Some(window) = web_sys::window() {
+        window
+    } else {
+        panic!("could not get a window");
+    };
+
+    let document = if let Some(document) = window.document() {
+        document
+    } else {
+        panic!("could not get a document");
+    };
+
+    let template = if let Ok(template) = document.create_element("template") {
+        template
+    } else {
+        panic!("could not create template element");
+    };
+    template.set_id(&template_id);
+    template.set_inner_html(&template_content);
+
+    let body = if let Some(body) = document.body() {
+        body
+    } else {
+        panic!("could not get a body element");
+    };
+
+    if let Err(_) = body.append_child(&template) {
+        panic!("could not add a template to the body element");
+    };
+}
