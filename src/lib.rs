@@ -233,19 +233,22 @@ pub trait Component {
         vec![]
     }
 
-    /// Called every time when one of the observed attributes is changed
+    /// Invoked when one of the custom element's attributes is added, removed, or changed.
     /// # Arguments
     ///
     /// * `_name` - A name of an attribute
     /// * `_old_value` - A previous value of an attribute
     /// * `_old_value` - A new value of an attribute
-    fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String);
+    fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue);
 
-    /// Called when custom element is attached to the DOM
+    /// Invoked when the custom element is first connected to the document's DOM.
     fn connected_callback(&mut self);
 
-    /// Called when custom element is detached from the DOM
+    /// Invoked when the custom element is disconnected from the document's DOM.
     fn disconnected_callback(&self);
+
+    /// Invoked when the custom element is moved to a new document.
+    fn adopted_callback(&self) {}
 }
 
 #[wasm_bindgen]
@@ -290,8 +293,8 @@ impl BaseComponent {
     pub fn attribute_changed_callback(
         &mut self,
         _name: String,
-        _old_value: String,
-        _new_value: String,
+        _old_value: JsValue,
+        _new_value: JsValue,
     ) {
         self.get_handler()
             .get_mut()
@@ -306,6 +309,11 @@ impl BaseComponent {
     #[allow(dead_code)]
     pub fn disconnected_callback(&mut self) {
         self.get_handler().get_mut().disconnected_callback();
+    }
+
+    #[allow(dead_code)]
+    pub fn adopted_callback(&mut self) {
+        self.get_handler().get_mut().adopted_callback();
     }
 
     fn get_handler(&mut self) -> &mut RefCell<Box<dyn Component>> {

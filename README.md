@@ -1,15 +1,21 @@
 A sample project that shows how a custom component can be created in Rust.
 
+v0.1.4:
+- [An issue with the arguments type of the attribute_changed callback function has been fixed](https://github.com/YuriyRum/rs_web_component/issues/1)
+- [An example with a material outlined text field was added](https://github.com/YuriyRum/rs_web_component/tree/master/examples/material_input)
+- The function adopted_callback with the default implementation was added
+
 v0.1.3:
-- Function add_template was added
+- The function add_template was added
 - An example with a template was added
 
-[Documentation](https://docs.rs/rs_web_component/0.1.3/rs_web_component)
+[Documentation v0.1.4](https://docs.rs/rs_web_component/0.1.4/rs_web_component)
 
-Examples:<br/>
-[Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component)<br/>
-[Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handler)<br/> 
-[An example with a template](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_template)
+Examples:
+- [Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component)
+- [Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handler)
+- [An example with a template](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_template)
+- [An example with a material outlined text field](https://github.com/YuriyRum/rs_web_component/tree/master/examples/material_input)
 
 Basic example:
 ```

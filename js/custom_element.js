@@ -13,7 +13,7 @@ export function create_element(
         }
 
         attributeChangedCallback(name, oldValue, newValue) {
-            component.attribute_changed_callback(name, oldValue, newValue);
+            component.attribute_changed_callback(name, oldValue ?? undefined, newValue);
         }
 
         connectedCallback() {
@@ -22,6 +22,10 @@ export function create_element(
 
         disconnectedCallback() {
             component.disconnected_callback();
+        }
+
+        adoptedCallback() {
+            component.adopted_callback();
         }
     };
     customElements.define(name, CustomElement);
