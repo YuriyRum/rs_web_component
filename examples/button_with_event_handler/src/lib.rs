@@ -36,7 +36,7 @@ impl Component for MyComponent {
         return vec!["test".to_string()];
     }
 
-    fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String) {}
+    fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue) {}
 
     fn connected_callback(&mut self) {
         self.root = RootVal::Value(

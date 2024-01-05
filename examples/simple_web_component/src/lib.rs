@@ -26,8 +26,8 @@ impl Component for MyComponent {
         return vec!["test".to_string()];
     }
 
-    fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String) {
-        if _old_value != _new_value {
+    fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue) {
+        if !_old_value.is_undefined() {
             self.get_root().set_inner_html(self.render().as_str())
         }
     }
