@@ -12,6 +12,10 @@ export function create_element(
             return component.observed_attributes();
         }
 
+        setData(data = []) {
+            component.set_data(data);
+        }
+
         attributeChangedCallback(name, oldValue, newValue) {
             component.attribute_changed_callback(name, oldValue ?? undefined, newValue);
         }

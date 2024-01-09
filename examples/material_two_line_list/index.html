@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World - Rust</title>
+    <script type="module" src="./index.js"></script>
+    <script src="https://unpkg.com/material-components-web@v5.0.0/dist/material-components-web.min.js"></script>
+
+    <script>
+        addEventListener("load", (_) => {
+            setTimeout(() => {
+                const list = document.querySelector('#list');
+                list.setData([
+                    { name: "John", lastname: "Smith", age: 26 },
+                    { name: "Jane", lastname: "Smith", age: 26 },
+                ]);
+            }, 400);
+        });
+
+    </script>
+</head>
+
+<body>
+    <material-list id="list"></material-list>
+</body>
+
+</html>

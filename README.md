@@ -1,5 +1,9 @@
 A sample project that shows how a custom component can be created in Rust.
 
+v0.1.5
+- The function set_data is added. Allows to pass state to a cusstom element.
+- [An example with a material two line list and a state was added](https://github.com/YuriyRum/rs_web_component/tree/master/examples/material_two_line_list)
+
 v0.1.4:
 - [An issue with the arguments type of the attribute_changed callback function has been fixed](https://github.com/YuriyRum/rs_web_component/issues/1)
 - [An example with a material outlined text field was added](https://github.com/YuriyRum/rs_web_component/tree/master/examples/material_input)
@@ -9,7 +13,7 @@ v0.1.3:
 - The function add_template was added
 - An example with a template was added
 
-[Documentation v0.1.4](https://docs.rs/rs_web_component/0.1.4/rs_web_component)
+[Documentation v0.1.5](https://docs.rs/rs_web_component/0.1.4/rs_web_component)
 
 Examples:
 - [Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component)
