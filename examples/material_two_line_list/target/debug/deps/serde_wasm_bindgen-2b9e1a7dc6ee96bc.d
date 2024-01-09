@@ -1,0 +1,9 @@
+/Users/urijrumancev/rust_dev/web_components/rs_web_component/examples/material_two_line_list/target/debug/deps/libserde_wasm_bindgen-2b9e1a7dc6ee96bc.rmeta: /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/lib.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/de.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/error.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/ser.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/../README.md
+
+/Users/urijrumancev/rust_dev/web_components/rs_web_component/examples/material_two_line_list/target/debug/deps/serde_wasm_bindgen-2b9e1a7dc6ee96bc.d: /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/lib.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/de.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/error.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/ser.rs /Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/../README.md
+
+/Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/lib.rs:
+/Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/de.rs:
+/Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/error.rs:
+/Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/ser.rs:
+/Users/urijrumancev/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-wasm-bindgen-0.4.5/src/../README.md:
