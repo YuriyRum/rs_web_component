@@ -46,7 +46,7 @@ enum HandlerVal {
 ///         return vec!["test".to_string()];
 ///     }
 
-///     fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String) {
+///     fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue) {
 ///         if _old_value != _new_value {
 ///             self.get_root().set_inner_html(self.render().as_str())
 ///         }
@@ -139,7 +139,7 @@ enum HandlerVal {
 ///         return vec!["test".to_string()];
 ///     }
 ///
-///     fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String) {}
+///     fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue) {}
 ///
 ///     fn connected_callback(&mut self) {
 ///         self.root = RootVal::Value(
@@ -221,6 +221,7 @@ enum HandlerVal {
 ///     });
 /// }
 /// ```
+
 pub trait Component {
     /// Gives access to a web_sys::HtmlElement
     /// # Arguments
@@ -249,6 +250,9 @@ pub trait Component {
 
     /// Invoked when the custom element is moved to a new document.
     fn adopted_callback(&self) {}
+
+    /// Can be invoked to pass state to a custom element
+    fn set_data(&mut self, _data: JsValue) {}
 }
 
 #[wasm_bindgen]
@@ -314,6 +318,11 @@ impl BaseComponent {
     #[allow(dead_code)]
     pub fn adopted_callback(&mut self) {
         self.get_handler().get_mut().adopted_callback();
+    }
+
+    #[allow(dead_code)]
+    pub fn set_data(&mut self, _data: JsValue) {
+        self.get_handler().get_mut().set_data(_data);
     }
 
     fn get_handler(&mut self) -> &mut RefCell<Box<dyn Component>> {

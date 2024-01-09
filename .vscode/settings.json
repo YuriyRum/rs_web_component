@@ -5,6 +5,10 @@
         "./examples/button_with_event_handler/Cargo.toml",
         "./examples/simple_template/Cargo.toml",
         "./examples/material_input/Cargo.toml",
-        "./examples/material_input/Cargo.toml"
+        "./examples/material_input/Cargo.toml",
+        "./examples/material_two_line_list/Cargo.toml"
+    ],
+    "liveServer.settings.ignoreFiles": [
+        "**"
     ]
 }

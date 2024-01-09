@@ -1,6 +1,6 @@
 [package]
 name = "rs_web_component"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 
 authors = ["YuriyRum<rumyua@gmail.com>"]
@@ -9,7 +9,7 @@ readme = "README.md"
 homepage="https://github.com/YuriyRum/rs_web_component/"
 repository = "https://github.com/YuriyRum/rs_web_component/"
 license = "MIT"
-keywords = ["web", "wasm"]
+keywords = ["web", "wasm", "webcomponent"]
 exclude = ["/target", ".*"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
