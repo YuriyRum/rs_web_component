@@ -1,10 +1,10 @@
 use std::cell::RefCell;
 use wasm_bindgen::prelude::*;
-use web_sys::HtmlElement;
+use web_sys::{js_sys::Function, HtmlElement};
 
-#[wasm_bindgen(module = "/js/custom_element.js")]
+#[wasm_bindgen]
 extern "C" {
-    fn create_element(name: String, renderer: BaseComponent);
+    fn _create_custom_element_js(name: String, renderer: BaseComponent);
 }
 
 enum HandlerVal {
@@ -222,6 +222,10 @@ enum HandlerVal {
 /// }
 /// ```
 
+fn create_global_func() {
+    let _ = create_custom_element().call0(&JsValue::default());
+}
+
 pub trait Component {
     /// Gives access to a web_sys::HtmlElement
     /// # Arguments
@@ -339,11 +343,12 @@ impl BaseComponent {
 /// * `name` - A name of a new custom element
 /// * `constructor` - Function/Closure which creates an instance of a custom element
 pub fn define_element(name: String, constructor: fn() -> Box<dyn Component>) {
+    create_global_func();
     let renderer: BaseComponent = BaseComponent {
         handler: RefCell::new(HandlerVal::None),
         component_constructor: constructor,
     };
-    create_element(name, renderer);
+    _create_custom_element_js(name, renderer);
 }
 
 /**
@@ -384,4 +389,51 @@ pub fn add_template(template_id: String, template_content: String) {
     if let Err(_) = body.append_child(&template) {
         panic!("could not add a template to the body element");
     };
+}
+
+fn create_custom_element() -> Function {
+    Function::new_no_args(
+        "
+            if(window._create_custom_element_js) {
+                return;
+            }
+            window._create_custom_element_js = function(
+                name,
+                component
+            ) {
+                class CustomElement extends HTMLElement {
+                    constructor() {
+                        super();
+                        component.init(this);
+                    }
+            
+                    static get observedAttributes() {
+                        return component.observed_attributes();
+                    }
+            
+                    setData(data = []) {
+                        component.set_data(data);
+                    }
+            
+                    attributeChangedCallback(name, oldValue, newValue) {
+                        component.attribute_changed_callback(name, oldValue ?? undefined, newValue);
+                    }
+            
+                    connectedCallback() {
+                        component.connected_callback();
+                    }
+            
+                    disconnectedCallback() {
+                        component.disconnected_callback();
+                    }
+            
+                    adoptedCallback() {
+                        component.adopted_callback();
+                    }
+                };
+                customElements.define(name, CustomElement);
+            }
+        
+    ",
+    )
 }
