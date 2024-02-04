@@ -1,5 +1,9 @@
 A sample project that shows how a custom component can be created in Rust.
 
+v0.1.7
+- Description in the Cargo.toml file corrected
+- Link to documentation corrected
+
 v0.1.6
 - The JS snippet was removed. No more JS snippets, just Rust 😀.
 - Fixed documentation  
@@ -17,7 +21,7 @@ v0.1.3:
 - The function add_template was added
 - An example with a template was added
 
-[Documentation v0.1.5](https://docs.rs/rs_web_component/0.1.5/rs_web_component)
+[Documentation v0.1.7](https://docs.rs/rs_web_component/0.1.7/rs_web_component)
 
 Examples:
 - [Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component)
