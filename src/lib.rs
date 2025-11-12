@@ -10,6 +10,14 @@ extern "C" {
 enum HandlerVal {
     #[allow(dead_code)]
     Value(RefCell<Box<dyn Component>>),
+    ValueV2(RefCell<Box<dyn ComponentV2>>),
+    None,
+}
+
+enum ConstructorVal {
+    #[allow(dead_code)]
+    Value(fn() -> Box<(dyn Component + 'static)>),
+    ValueV2(fn() -> Box<(dyn ComponentV2 + 'static)>),
     None,
 }
 
@@ -227,7 +235,7 @@ fn create_global_func() {
 }
 
 pub trait Component {
-    /// Gives access to a web_sys::HtmlElement
+    /// Gives access to a web_sys::HtmlElement. Invoked in the constructor of the CustomElement.
     /// # Arguments
     ///
     /// * `this` - A structure that holds an HtmlElement
@@ -257,6 +265,56 @@ pub trait Component {
 
     /// Can be invoked to pass state to a custom element
     fn set_data(&mut self, _data: JsValue) {}
+
+}
+
+pub trait ComponentV2 {
+    /// Gives access to a web_sys::HtmlElement. Invoked in the constructor of the CustomElement.
+    /// # Arguments
+    ///
+    /// * `this` - A structure that holds an HtmlElement
+    fn init(&mut self, this: HtmlElement);
+
+    /// # Arguments
+    ///
+    /// * `this` - A structure that holds an HtmlElement
+    /// Returns list of observed attributes
+    fn observed_attributes(&self, _this: HtmlElement) -> Vec<String> {
+        vec![]
+    }
+
+    /// Invoked when one of the custom element's attributes is added, removed, or changed.
+    /// # Arguments
+    ///
+    /// * `_name` - A name of an attribute
+    /// * `_old_value` - A previous value of an attribute
+    /// * `_old_value` - A new value of an attribute
+    /// * `_this` - A structure that holds an HtmlElement
+    fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue, _this: HtmlElement);
+
+    /// Invoked when the custom element is first connected to the document's DOM.
+    /// # Arguments
+    ///
+    /// * `this` - A structure that holds an HtmlElement
+    fn connected_callback(&mut self, this: HtmlElement);
+
+    /// Invoked when the custom element is disconnected from the document's DOM.
+    /// # Arguments
+    ///
+    /// * `this` - A structure that holds an HtmlElement
+    fn disconnected_callback(&self, this: HtmlElement);
+
+    /// Invoked when the custom element is moved to a new document.
+    /// # Arguments
+    ///
+    /// * `this` - A structure that holds an HtmlElement
+    fn adopted_callback(&self, _this: HtmlElement) {}
+
+    /// Can be invoked to pass state to a custom element
+    /// # Arguments
+    ///
+    /// * `this` - A structure that holds an HtmlElement
+    fn set_data(&mut self, _data: JsValue, _this: HtmlElement) {}
 }
 
 #[wasm_bindgen]
@@ -264,7 +322,7 @@ struct BaseComponent {
     #[allow(dead_code)]
     handler: RefCell<HandlerVal>,
     #[allow(dead_code)]
-    component_constructor: fn() -> Box<(dyn Component + 'static)>,
+    component_constructor: ConstructorVal,
 }
 
 #[wasm_bindgen]
@@ -273,28 +331,44 @@ impl BaseComponent {
     pub fn init(&mut self, this: HtmlElement) {
         let is_empty = match &(*self.handler.borrow()) {
             HandlerVal::None => true,
-            HandlerVal::Value(_val) => false,
+            _ => false,
         };
-        if is_empty {
-            self.handler = RefCell::new(HandlerVal::Value(RefCell::new((self
-                .component_constructor)(
-            ))));
+          if is_empty {
+            let contructor = match self.component_constructor {
+                ConstructorVal::Value(val) => RefCell::new(HandlerVal::Value(RefCell::new(val()))),
+                ConstructorVal::ValueV2(val_v2) => RefCell::new(HandlerVal::ValueV2(RefCell::new(val_v2()))),
+                ConstructorVal::None => RefCell::new(HandlerVal::None),
+            };
+            self.handler = contructor;
         }
-        self.get_handler().get_mut().init(this);
+        match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut().init(this),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut().init(this),
+            HandlerVal::None => panic!("not a component"),
+        };
+        // self.get_handler().get_mut().init(this);
     }
 
     #[allow(dead_code)]
-    pub fn observed_attributes(&mut self) -> Vec<String> {
+    pub fn observed_attributes(&mut self, this: HtmlElement) -> Vec<String> {
         let is_empty = match &(*self.handler.borrow()) {
             HandlerVal::None => true,
-            HandlerVal::Value(_val) => false,
+            _ => false,
         };
         if is_empty {
-            self.handler = RefCell::new(HandlerVal::Value(RefCell::new((self
-                .component_constructor)(
-            ))));
+            let contructor = match self.component_constructor {
+                ConstructorVal::Value(val) => RefCell::new(HandlerVal::Value(RefCell::new(val()))),
+                ConstructorVal::ValueV2(val_v2) => RefCell::new(HandlerVal::ValueV2(RefCell::new(val_v2()))),
+                ConstructorVal::None => RefCell::new(HandlerVal::None),
+            };
+            self.handler = contructor;
         }
-        return self.get_handler().get_mut().observed_attributes();
+        return match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut().observed_attributes(),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut().observed_attributes(this),
+            HandlerVal::None => panic!("not a component"),
+        };
+        // return self.get_handler().get_mut().observed_attributes();
     }
 
     #[allow(dead_code)]
@@ -303,41 +377,59 @@ impl BaseComponent {
         _name: String,
         _old_value: JsValue,
         _new_value: JsValue,
+        _this: HtmlElement
     ) {
-        self.get_handler()
-            .get_mut()
-            .attribute_changed_callback(_name, _old_value, _new_value);
+         match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut()
+                .attribute_changed_callback(_name, _old_value, _new_value),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut()
+                .attribute_changed_callback(_name, _old_value, _new_value, _this),
+            HandlerVal::None => panic!("not a component"),
+        }
+        // self.get_handler()
+        //     .get_mut()
+        //     .attribute_changed_callback(_name, _old_value, _new_value);
     }
 
     #[allow(dead_code)]
-    pub fn connected_callback(&mut self) {
-        self.get_handler().get_mut().connected_callback();
+    pub fn connected_callback(&mut self, this: HtmlElement) {
+         match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut().connected_callback(),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut().connected_callback(this),
+            HandlerVal::None => panic!("not a component"),
+        }
+        // self.get_handler().get_mut().connected_callback();
     }
 
     #[allow(dead_code)]
-    pub fn disconnected_callback(&mut self) {
-        self.get_handler().get_mut().disconnected_callback();
+    pub fn disconnected_callback(&mut self, this: HtmlElement) {
+         match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut().disconnected_callback(),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut().disconnected_callback(this),
+            HandlerVal::None => panic!("not a component"),
+        }
     }
 
     #[allow(dead_code)]
-    pub fn adopted_callback(&mut self) {
-        self.get_handler().get_mut().adopted_callback();
+    pub fn adopted_callback(&mut self, this: HtmlElement) {
+          match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut().adopted_callback(),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut().adopted_callback(this),
+            HandlerVal::None => panic!("not a component"),
+        }
     }
 
     #[allow(dead_code)]
-    pub fn set_data(&mut self, _data: JsValue) {
-        self.get_handler().get_mut().set_data(_data);
-    }
-
-    fn get_handler(&mut self) -> &mut RefCell<Box<dyn Component>> {
-        match self.handler.get_mut() {
-            HandlerVal::Value(val) => val,
+    pub fn set_data(&mut self, _data: JsValue, _this: HtmlElement) {
+         match self.handler.get_mut() {
+            HandlerVal::Value(val) => val.get_mut().set_data(_data),
+            HandlerVal::ValueV2(val_v2) => val_v2.get_mut().set_data(_data, _this),
             HandlerVal::None => panic!("not a component"),
         }
     }
 }
 
-/// Defines a new custom element
+/// Defines a new custom element which implements trait Component
 /// # Arguments
 ///
 /// * `name` - A name of a new custom element
@@ -346,7 +438,21 @@ pub fn define_element(name: String, constructor: fn() -> Box<dyn Component>) {
     create_global_func();
     let renderer: BaseComponent = BaseComponent {
         handler: RefCell::new(HandlerVal::None),
-        component_constructor: constructor,
+        component_constructor: ConstructorVal::Value(constructor),
+    };
+    _create_custom_element_js(name, renderer);
+}
+
+/// Defines a new custom element which implements trait ComponentV2
+/// # Arguments
+///
+/// * `name` - A name of a new custom element
+/// * `constructor` - Function/Closure which creates an instance of a custom element
+pub fn define_element_v2(name: String, constructor: fn() -> Box<dyn ComponentV2>) {
+    create_global_func();
+    let renderer: BaseComponent = BaseComponent {
+        handler: RefCell::new(HandlerVal::None),
+        component_constructor: ConstructorVal::ValueV2(constructor),
     };
     _create_custom_element_js(name, renderer);
 }
@@ -408,27 +514,27 @@ fn create_custom_element() -> Function {
                     }
             
                     static get observedAttributes() {
-                        return component.observed_attributes();
+                        return component.observed_attributes(this);
                     }
             
                     setData(data = []) {
-                        component.set_data(data);
+                        component.set_data(data, this);
                     }
             
                     attributeChangedCallback(name, oldValue, newValue) {
-                        component.attribute_changed_callback(name, oldValue ?? undefined, newValue);
+                        component.attribute_changed_callback(name, oldValue ?? undefined, newValue, this);
                     }
             
                     connectedCallback() {
-                        component.connected_callback();
+                        component.connected_callback(this);
                     }
             
                     disconnectedCallback() {
-                        component.disconnected_callback();
+                        component.disconnected_callback(this);
                     }
             
                     adoptedCallback() {
-                        component.adopted_callback();
+                        component.adopted_callback(this);
                     }
                 };
                 customElements.define(name, CustomElement);

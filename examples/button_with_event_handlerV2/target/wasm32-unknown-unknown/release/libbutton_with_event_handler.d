@@ -1,0 +1,1 @@
+/Users/urijrumancev/rust_dev/rs_web_component/examples/button_with_event_handlerV2/target/wasm32-unknown-unknown/release/libbutton_with_event_handler.rlib: /Users/urijrumancev/rust_dev/rs_web_component/examples/button_with_event_handlerV2/src/lib.rs /Users/urijrumancev/rust_dev/rs_web_component/src/lib.rs

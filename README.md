@@ -1,5 +1,14 @@
 A sample project that shows how a custom component can be created in Rust.
 
+v0.1.8
+- The new trait ComponentV2 is introduced. 
+  The only difference between ComponentV2 and Component is that methods of the ComponentV2 have reference to the js "this" object as a parameter. So it's not necessary anymore to keep "this" as a field of a structure.
+- The function define_element_v2 is added. It defines a custom element that implements the ComponentV2 trait. 
+- Two new examples added for the ComponentV2 trait and function define_element_v2:
+  - [Button with the event handler](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handlerV2)
+  - [Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_componentV2)  
+- Fixed documentation
+
 v0.1.7
 - Description in the Cargo.toml file corrected
 - Link to documentation corrected
@@ -21,7 +30,7 @@ v0.1.3:
 - The function add_template was added
 - An example with a template was added
 
-[Documentation v0.1.7](https://docs.rs/rs_web_component/0.1.7/rs_web_component)
+[Documentation v0.1.8](https://docs.rs/rs_web_component/0.1.8/rs_web_component)
 
 Examples:
 - [Basic example](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_component)
@@ -29,6 +38,11 @@ Examples:
 - [An example with a template](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_template)
 - [An example with a material outlined text field](https://github.com/YuriyRum/rs_web_component/tree/master/examples/material_input)
 - [An example with a material two line list and a state](https://github.com/YuriyRum/rs_web_component/tree/master/examples/material_two_line_list)
+- [Button with the event handler V2](https://github.com/YuriyRum/rs_web_component/tree/master/examples/button_with_event_handlerV2)
+- [Basic example V2](https://github.com/YuriyRum/rs_web_component/tree/master/examples/simple_web_componentV2)  
+
+To run examples, create a build with wasm-pack inside of the example folder:
+- wasm-pack build --target web
 
 Basic example:
 ```
@@ -60,8 +74,8 @@ impl Component for MyComponent {
         return vec!["test".to_string()];
     }
 
-    fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String) {
-        if _old_value != _new_value {
+    fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue) {
+        if !_old_value.is_undefined() {
             self.get_root().set_inner_html(self.render().as_str())
         }
     }
@@ -151,7 +165,7 @@ impl Component for MyComponent {
         return vec!["test".to_string()];
     }
 
-    fn attribute_changed_callback(&self, _name: String, _old_value: String, _new_value: String) {}
+    fn attribute_changed_callback(&self, _name: String, _old_value: JsValue, _new_value: JsValue) {}
 
     fn connected_callback(&mut self) {
         self.root = RootVal::Value(
@@ -232,4 +246,5 @@ fn run() {
         })
     });
 }
+
 ```

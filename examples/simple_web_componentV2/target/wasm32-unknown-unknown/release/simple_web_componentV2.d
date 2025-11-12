@@ -1,0 +1,1 @@
+/Users/urijrumancev/rust_dev/rs_web_component/examples/simple_web_componentV2/target/wasm32-unknown-unknown/release/simple_web_componentV2.wasm: /Users/urijrumancev/rust_dev/rs_web_component/examples/simple_web_componentV2/src/lib.rs /Users/urijrumancev/rust_dev/rs_web_component/src/lib.rs

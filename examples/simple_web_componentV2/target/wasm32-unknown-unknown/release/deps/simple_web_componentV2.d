@@ -1,0 +1,7 @@
+/Users/urijrumancev/rust_dev/rs_web_component/examples/simple_web_componentV2/target/wasm32-unknown-unknown/release/deps/simple_web_componentV2.d: src/lib.rs
+
+/Users/urijrumancev/rust_dev/rs_web_component/examples/simple_web_componentV2/target/wasm32-unknown-unknown/release/deps/simple_web_componentV2.wasm: src/lib.rs
+
+/Users/urijrumancev/rust_dev/rs_web_component/examples/simple_web_componentV2/target/wasm32-unknown-unknown/release/deps/libsimple_web_componentV2.rlib: src/lib.rs
+
+src/lib.rs:
